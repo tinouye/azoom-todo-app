@@ -1,31 +1,25 @@
 <script setup>
-let todoList = [];
-let inputDate = "";
-let inputItem = "";
-function addtodoItem(){
-  todoList.push([inputDate, inputItem])
+import { ref } from 'vue';
+import TodoView from './TodoView.vue';
+import CompletedView from './CompletedView.vue';
+
+let showCompleted = ref(false);
+
+function switchList() {
+  showCompleted.value = !showCompleted.value;
+  console.log(showCompleted.value);
 }
 </script>
 
 <template>
-  <div>
-    <h1>Hello World!</h1>>
-    <list>
+  <h1>Task List</h1>
+  <table>
+    <tbody>
       <tr>
-        <th>Date</th>
-        <th>Item</th>
-        <th>Status</th>
+        <td v-on:click="switchList">Tasks</td>
+        <td>Completed</td>
       </tr>
-      <tr>
-        <td>1/2/34</td>
-        <td>Foo</td>
-        <td><input type="checkbox"></td>
-      </tr>
-    </list>
-    <form v-on:submit.prevent="addtodoItem">
-      <input type="text" required placeholder="Date" v-model="inputDate">
-      <input type="text" required placeholder="Item name" v-model="inputItem">
-      <button type="submit">Add Item</button>
-    </form>
-  </div>
+    </tbody>
+  </table>
+  <TodoView :showCompleted="showCompleted" />
 </template>
