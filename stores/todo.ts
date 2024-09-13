@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 interface TodoItem {
-    date: Date,
+    date: string,
     title: string
 }
 
@@ -16,17 +16,22 @@ export const todoStore = defineStore("todo", {
         completed: []
     }),
     actions: {
-        addItem(date: Date, title: string) {
+        addItem(date: string, title: string) {
             this.items.push({date: date, title: title});
         },
         completeItem(index: number) {
             const removedItem: TodoItem = this.items.splice(index, 1)[0];
             this.completed.push({date:removedItem.date, title:removedItem.title});
-            //this.add_item(removedItem.date, removedItem.title);
         },
         unCompleteItem(index: number) {
             const removedItem: TodoItem = this.completed.splice(index, 1)[0];
             this.items.push({date:removedItem.date, title:removedItem.title});
+        },
+        removeItem(index: number) {
+            this.items.splice(index, 1);
+        },
+        removeCompleted(index: number) {
+            this.completed.splice(index, 1);
         }
     }
 })
